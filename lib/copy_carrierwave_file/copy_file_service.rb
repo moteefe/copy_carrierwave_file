@@ -1,7 +1,7 @@
 module CopyCarrierwaveFile
   class CopyFileService
     NoFileForOriginalResource = Class.new(StandardError)
-    UnknowStorage             = Class.new(StandardError)
+    UnknownStorage            = Class.new(StandardError)
 
     attr_reader :original_resource, :resource, :mount_point
 
@@ -31,10 +31,10 @@ module CopyCarrierwaveFile
         case original_resource_mounter.send(:storage).class.name
         when 'CarrierWave::Storage::File'
           set_file_for_local_storage
-        when 'CarrierWave::Storage::Fog', 'CarrierWave::Storage::AWS'
+        when 'CarrierWave::Storage::Fog', 'CarrierWave::Storage::AWS', 'Cloudinary::CarrierWave::Storage'
           set_file_for_remote_storage
         else
-          raise UnknowStorage
+          raise UnknownStorage
         end
       else
         raise NoFileForOriginalResource
