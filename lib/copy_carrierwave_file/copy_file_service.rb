@@ -29,9 +29,9 @@ module CopyCarrierwaveFile
     def set_file
       if have_file?
         case original_resource_mounter.send(:storage).class.name
-        when 'CarrierWave::Storage::File'
+        when 'CarrierWave::Storage::File', 'Cloudinary::CarrierWave::Storage'
           set_file_for_local_storage
-        when 'CarrierWave::Storage::Fog', 'CarrierWave::Storage::AWS', 'Cloudinary::CarrierWave::Storage'
+        when 'CarrierWave::Storage::Fog', 'CarrierWave::Storage::AWS'
           set_file_for_remote_storage
         else
           raise UnknownStorage
